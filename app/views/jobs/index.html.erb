@@ -1,0 +1,26 @@
+<% html_title "Jobs" %>
+<div class="contextual">
+  <%= link_to 'Create new job', new_job_path(project_id: @project.id), class: "icon icon-add new-job" %>
+</div>
+
+<h2>Jobs</h2>
+
+<% if @jobs.empty? %>
+  <p>You haven’t created any jobs yet.</p>
+<% else %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Starts on</th>
+        <th>Ends on</th>
+        <th>Project</th>
+        <th>External project</th>
+        <th>Budget</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @jobs %>
+    </tbody>
+  </table>
+<% end %>

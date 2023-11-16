@@ -1,0 +1,9 @@
+<tr>
+  <td><%= link_to job.name, job_path(job, project_id: job.project_id) %></td>
+  <td><%= job.starts_on %></td>
+  <td><%= job.ends_on %></td>
+  <td><%= job.project_id %></td>
+  <td><%= job.external_project_id %></td>
+  <td><%= job.budget %></td>
+</tr>
+

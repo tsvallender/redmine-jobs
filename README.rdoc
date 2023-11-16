@@ -1,0 +1,6 @@
+= Jobs
+
+_Jobs_ is a Redmine plugin allowing the management of jobs—chunks of time sold to clients for budget management.
+
+- Add jobs with time budgets
+- Associated time log entries with a given job

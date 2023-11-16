@@ -1,0 +1,40 @@
+<div class="box tabular">
+  <%= form_with model: @job, id: "job_form" do |f| %>
+    <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    </p>
+
+    <p>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+    </p>
+
+    <p>
+    <%= f.label :starts_on %>
+    <%= f.date_field :starts_on %>
+    </p>
+
+    <p>
+    <%= f.label :ends_on %>
+    <%= f.date_field :ends_on %>
+    </p>
+
+    <p>
+    <%= f.label :project_id %>
+    <%= f.number_field :project_id %>
+    </p>
+
+    <p>
+    <%= f.label :external_project_id %>
+    <%= f.number_field :external_project_id %>
+    </p>
+
+    <p>
+    <%= f.label :budget %>
+    <%= f.number_field :budget %>
+    </p>
+
+    <%= f.submit %>
+  <% end %>
+</div>

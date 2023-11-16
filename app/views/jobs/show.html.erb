@@ -1,0 +1,11 @@
+<% html_title @job.name %>
+<h3><%= link_to @job.name, @job %></h3>
+<p><%= @job.description %></p>
+<dl>
+  <dt>Starts on:</dt>
+  <dd><%= @job.starts_on %></dd>
+  <dt>Ends on:</dt>
+  <dd><%= @job.ends_on %></dd>
+</dl>
+
+<%= link_to 'Edit job', edit_job_path(@job, project_id: @project.id) %>
