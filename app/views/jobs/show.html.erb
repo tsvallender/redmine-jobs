@@ -6,6 +6,12 @@
   <dd><%= @job.starts_on %></dd>
   <dt>Ends on:</dt>
   <dd><%= @job.ends_on %></dd>
+  <dt>Total time logged:</dt>
+  <dd><%= @job.total_time_logged %></dd>
+  <% TimeEntryActivity.all.each do |activity| %>
+    <dt>Total time logged for <%= activity.name %></dt>
+    <dd><%= @job.total_time_logged_for(activity) %></dd>
+  <% end %>
 </dl>
 
 <%= link_to 'Edit job', edit_job_path(@job, project_id: @project.id) %>

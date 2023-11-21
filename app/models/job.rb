@@ -8,7 +8,13 @@ class Job < ActiveRecord::Base
 
   scope :project, ->(project) { where(project_id: project.id) }
 
-  def time_logged
-    42
+  def total_time_logged
+    TimeEntry.where(job_id: id)
+             .sum(:hours)
+  end
+
+  def total_time_logged_for(activity)
+    TimeEntry.where(job_id: id, activity_id: activity.id)
+             .sum(:hours)
   end
 end
