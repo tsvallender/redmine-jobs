@@ -1,17 +1,9 @@
-- Add a job model
-    - Start/end date
-    - External project ID (one-to-one relationship)
-    - Name
-    - Client (project ID)
-    - Description
+- Show job in time logs
+- Make job association required
+- Add to job model
     - Job ID? (this is in Amigo)
     - Status (pending acceptance etc.)
-    - Total time (budget per activity type?)
     - List of associated trackers
-- Add association between time log entries and jobs
-- Add UI for jobs
-    - CRUD stuff
-    - Set up default associations
 
 - Separate plugin:
     - Whenever time log is updated, fire this at Everhour
