@@ -1,1 +1,4 @@
-<h1>FOOBAR</h1>
+<p>
+<%= form.label :job_id %>
+<%= form.collection_select :job_id, Job.project(@project), :id, :name %>
+</p>

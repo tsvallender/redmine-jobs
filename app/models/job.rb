@@ -4,6 +4,8 @@ class Job < ActiveRecord::Base
             :name,
             presence: true
 
+  scope :project, ->(project) { where(project_id: project.id) }
+
   def time_logged
     42
   end

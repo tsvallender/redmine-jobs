@@ -8,6 +8,8 @@ class CreateJobs < ActiveRecord::Migration[6.1]
       t.references :project, foreign_key: true
       t.string :description
       t.integer :budget
+
+      t.timestamps
     end
     add_index :jobs, :name, unique: true
   end

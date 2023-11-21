@@ -8,4 +8,6 @@ Redmine::Plugin.register :jobs do
 
   permission :jobs, { jobs: [:index, :show, :new, :create, :edit, :update, :destroy] }, public: true
   menu :project_menu, :jobs, { controller: 'jobs', action: 'index' }, caption: 'Jobs', after: :issues, param: :project_id
+
+  TimeEntry.safe_attributes 'job_id'
 end
