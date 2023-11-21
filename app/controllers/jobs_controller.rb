@@ -18,7 +18,7 @@ class JobsController < ApplicationController
 
   def update
     if @job.update(job_params)
-      redirect_to @job
+      redirect_to job_path(@job, project_id: @job.project.id)
     else
       render :edit
     end
@@ -26,13 +26,14 @@ class JobsController < ApplicationController
 
   def create
     if @job = Job.create(job_params)
-      redirect_to @job
+      redirect_to job_path(@job, project_id: @job.project.id)
     else
       render :edit
     end
   end
 
   def destroy
+    @project = @job.project
     if @job.destroy
       redirect_to jobs_path(project_id: @project.id)
     else
