@@ -1,5 +1,5 @@
-<div class="box tabular">
-  <%= form_with model: @job, id: "job_form" do |f| %>
+<%= form_with model: @job, id: "job_form" do |f| %>
+  <div class="box tabular">
     <p>
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -32,6 +32,7 @@
     <%= f.number_field :budget %>
     </p>
 
-    <%= f.submit %>
-  <% end %>
-</div>
+  </div>
+  <%= f.submit %>
+  <%= link_to "Cancel", job_path(@job, project_id: @project.id) %>
+<% end %>
