@@ -3,7 +3,7 @@ class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy]
 
   def index
-    @jobs = Job.all
+    @jobs = Job.project_or_parent(@project)
   end
 
   def show

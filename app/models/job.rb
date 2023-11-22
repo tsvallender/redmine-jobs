@@ -10,6 +10,7 @@ class Job < ActiveRecord::Base
   has_many :time_entries
 
   scope :project, ->(project) { where(project_id: project.id) }
+  scope :project_or_parent, ->(project) { where(project_id: [project.id, project.parent.id]) }
 
   def total_time_logged
     TimeEntry.where(job_id: id)
