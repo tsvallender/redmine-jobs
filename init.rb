@@ -10,4 +10,10 @@ Redmine::Plugin.register :jobs do
   menu :project_menu, :jobs, { controller: 'jobs', action: 'index' }, caption: 'Jobs', after: :issues, param: :project_id
 
   TimeEntry.safe_attributes 'job_id'
+
+  Rails.application.config.before_initialize do
+    Rails.logger.info "Patch Jobs"
+    TimeEntryQuery.send(:include, TimeEntryQueryPatch)
+    TimeEntry.send(:include, TimeEntryPatch)
+  end
 end

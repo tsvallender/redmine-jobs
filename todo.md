@@ -1,5 +1,3 @@
-- Show job in time logs
-- Make job association required
 - Add to job model
     - Job ID? (this is in Amigo)
     - Status (pending acceptance etc.)
