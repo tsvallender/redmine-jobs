@@ -27,12 +27,11 @@
         <div class="status attribute">
           <div class="label">Total:</div>
           <div class="value">
-            <%= l_hours_short(@job.total_time_logged) %> / <%= l_hours_short(@job.budget) %>
-            <progress max="<%= @job.budget %>" value="<%= @job.total_time_logged %>"></progress>
+            <%= l_hours_short(@job.total_time_logged) %> / <%= l_hours_short(@job.total_time_budget) %>
+            <progress max="<%= @job.total_time_budget %>" value="<%= @job.total_time_logged %>"></progress>
           </div>
-          <% TimeEntryActivity.all.each do |activity| %>
-            <div class="label"><%= activity.name %>:</div>
-            <div class="value"><%= l_hours_short(@job.total_time_logged_for(activity)) %></div>
+          <% @job.time_budgets.each do |budget| %>
+            <%= render partial: "budget", locals: { budget: budget } %>
           <% end %>
         </div>
       </div>

@@ -10,14 +10,15 @@ class JobsController < ApplicationController
   end
 
   def new
-    @job = Job.new
+    @job = Job.new.with_all_time_budgets
   end
 
   def edit
+    @job.with_all_time_budgets
   end
 
   def update
-    if @job.update(job_params)
+    if @job.update(remove_empty_time_budgets(job_params))
       redirect_to job_path(@job, project_id: @job.project.id)
     else
       render :edit
@@ -51,7 +52,8 @@ class JobsController < ApplicationController
       :budget,
       :external_project_id,
       :name,
-      :description
+      :description,
+      time_budgets_attributes: [:id, :activity_id, :hours, :job_id, :_destroy]
     )
   end
 
@@ -61,5 +63,13 @@ class JobsController < ApplicationController
 
   def set_job
     @job = Job.find(params[:id])
+  end
+
+  # If a time budget is set to 0, remove it
+  def remove_empty_time_budgets(params)
+    params[:time_budgets_attributes].each do |key, value|
+      params[:time_budgets_attributes][key]["_destroy"] = true if params[:time_budgets_attributes][key]["hours"] == "0"
+    end
+    params
   end
 end

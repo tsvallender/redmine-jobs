@@ -1,9 +1,13 @@
 <tr>
   <td><%= link_to job.name, job_path(job, project_id: job.project_id) %></td>
-  <td><%= job.starts_on %></td>
-  <td><%= job.ends_on %></td>
+  <td><%= format_date(job.starts_on) %></td>
+  <td><%= format_date(job.ends_on) %></td>
   <td><%= job.project_id %></td>
   <td><%= job.external_project_id %></td>
-  <td><%= job.budget %></td>
+  <td>
+    <%= l_hours_short(job.total_time_logged) %> /
+    <%= l_hours_short(job.total_time_budget) %>
+    <progress max="<%= job.total_time_budget %>" value="<%= job.total_time_logged %>"></progress>
+  </td>
 </tr>
 

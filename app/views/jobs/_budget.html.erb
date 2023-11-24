@@ -1,0 +1,11 @@
+<div class="label"><%= budget.activity.name %></div>
+<div class="value">
+  <%= l_hours_short(
+    budget.job.total_time_logged_for(budget.activity)
+  ) %> /
+  <%= l_hours_short(
+    budget.hours
+  ) %>
+  <progress max="<%= budget %>"
+            value="<%= budget.job.total_time_logged_for(budget.activity) %>"></progress>
+</div>

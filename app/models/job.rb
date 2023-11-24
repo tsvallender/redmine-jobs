@@ -7,10 +7,34 @@ class Job < ActiveRecord::Base
             presence: true
 
   belongs_to :project
-  has_many :time_entries
+  has_many :time_entries, dependent: :restrict_with_error
+  has_many :time_budgets, dependent: :restrict_with_error
+  accepts_nested_attributes_for :time_budgets, allow_destroy: true
 
   scope :project, ->(project) { where(project_id: project.id) }
-  scope :project_or_parent, ->(project) { where(project_id: [project.id, project.parent.id]) }
+  scope :project_or_parent, ->(project) { where(project_id: [project.id, project.parent&.id]) }
+
+  def with_all_time_budgets
+    TimeEntryActivity.where.not(id: time_budgets.pluck(:activity_id)).each do |activity|
+      time_budgets << TimeBudget.new(job_id: id, activity_id: activity.id)
+    end
+    self
+  end
+
+  def missing_time_budgets
+    budgets = []
+    new_activities.collect { |activity| budgets << TimeBudget.new(job_id: id, activity_id: activity.id) }
+  end
+
+  def total_time_budget
+    return 0 if time_budgets.empty?
+
+    time_budgets.sum(&:hours)
+  end
+
+  def time_budget_for(activity)
+    time_budgets.where(activity_id: activity.id).hours || 0
+  end
 
   def total_time_logged
     TimeEntry.where(job_id: id)
