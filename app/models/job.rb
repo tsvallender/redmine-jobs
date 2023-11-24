@@ -15,8 +15,9 @@ class Job < ActiveRecord::Base
   scope :project_or_parent, ->(project) { where(project_id: [project.id, project.parent&.id]) }
 
   def with_all_time_budgets
+    time_budgets.build(job_id: id, activity_id: nil) unless time_budgets.where(activity_id: nil).exists?
     TimeEntryActivity.where.not(id: time_budgets.pluck(:activity_id)).each do |activity|
-      time_budgets << TimeBudget.new(job_id: id, activity_id: activity.id)
+      time_budgets.build(job_id: id, activity_id: activity.id)
     end
     self
   end
@@ -42,7 +43,7 @@ class Job < ActiveRecord::Base
   end
 
   def total_time_logged_for(activity)
-    TimeEntry.where(job_id: id, activity_id: activity.id)
+    TimeEntry.where(job_id: id, activity_id: activity&.id)
              .sum(:hours)
   end
 
