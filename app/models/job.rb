@@ -49,6 +49,6 @@ class Job < ActiveRecord::Base
 
   def to_s
     ActionView::Base.send(:include, Rails.application.routes.url_helpers)
-    ActionController::Base.helpers.link_to name, ActionController::Base.helpers.job_path(self, project_id: project.id)
+    ActionController::Base.helpers.link_to name, ActionController::Base.helpers.project_job_path(project, self)
   end
 end

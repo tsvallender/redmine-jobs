@@ -1,1 +1,3 @@
-resources :jobs
+resources :projects do
+  resources :jobs
+end

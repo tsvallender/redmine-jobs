@@ -1,3 +1,3 @@
-<h2><%= link_to "Jobs", jobs_path(project_id: @project.id) %> » New</h2>
+<h2><%= link_to "Jobs", project_jobs_path(@project) %> » New</h2>
 
-<%= render partial: "form", locals: { form_target: jobs_path } %>
+<%= render partial: "form", locals: { form_target: project_jobs_path(@project) } %>

@@ -19,7 +19,7 @@ class JobsController < ApplicationController
 
   def update
     if @job.update(remove_empty_time_budgets(job_params))
-      redirect_to job_path(@job, project_id: @job.project.id)
+      redirect_to project_job_path(@job.project, @job)
     else
       render :edit
     end
@@ -27,7 +27,7 @@ class JobsController < ApplicationController
 
   def create
     if @job = Job.create(job_params)
-      redirect_to job_path(@job, project_id: @job.project.id)
+      redirect_to project_job_path(@job.project, @job)
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class JobsController < ApplicationController
   def destroy
     @project = @job.project
     if @job.destroy
-      redirect_to jobs_path(project_id: @project.id)
+      redirect_to project_jobs_path(@project)
     else
       render :show
     end

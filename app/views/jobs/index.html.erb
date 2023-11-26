@@ -1,6 +1,6 @@
 <% html_title "Jobs" %>
 <div class="contextual">
-  <%= link_to 'New job', new_job_path(project_id: @project.id), class: "icon icon-add new-job" %>
+  <%= link_to 'New job', new_project_job_path(project: @project), class: "icon icon-add new-job" %>
 </div>
 
 <h2>Jobs</h2>
