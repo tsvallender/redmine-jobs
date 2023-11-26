@@ -10,7 +10,7 @@ class JobsController < ApplicationController
   end
 
   def new
-    @job = Job.new.with_all_time_budgets
+    @job = Job.new(project_id: @project.id).with_all_time_budgets
   end
 
   def edit
