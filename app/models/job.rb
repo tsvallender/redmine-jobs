@@ -7,8 +7,8 @@ class Job < ActiveRecord::Base
             presence: true
 
   belongs_to :project
-  has_many :time_entries, dependent: :restrict_with_error
-  has_many :time_budgets, dependent: :restrict_with_error
+  has_many :time_entries, dependent: :restrict_with_error, message: "You cannot delete a job with time logged against it."
+  has_many :time_budgets, dependent: :destroy
   accepts_nested_attributes_for :time_budgets, allow_destroy: true
 
   scope :project, ->(project) { where(project_id: project.id) }
