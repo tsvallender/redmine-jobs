@@ -15,5 +15,6 @@ Redmine::Plugin.register :jobs do
     Rails.logger.info "Patch Jobs"
     TimeEntryQuery.send(:include, TimeEntryQueryPatch)
     TimeEntry.send(:include, TimeEntryPatch)
+    Project.send(:include, ProjectPatch)
   end
 end
