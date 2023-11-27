@@ -7,12 +7,12 @@ class Job < ActiveRecord::Base
             presence: true
 
   belongs_to :project
-  has_many :time_entries, dependent: :restrict_with_error, message: "You cannot delete a job with time logged against it."
+  has_many :time_entries, dependent: :restrict_with_error
   has_many :time_budgets, dependent: :destroy
   accepts_nested_attributes_for :time_budgets, allow_destroy: true
 
-  scope :project, ->(project) { where(project_id: project.id) }
   scope :project_or_parent, ->(project) { where(project_id: [project.id, project.parent&.id]) }
+  scope :active, -> { where(starts_on: ..Date.today, ends_on: Date.today..) }
 
   def with_all_time_budgets
     time_budgets.build(job_id: id, activity_id: nil) unless time_budgets.where(activity_id: nil).exists?
@@ -34,7 +34,9 @@ class Job < ActiveRecord::Base
   end
 
   def time_budget_for(activity)
-    time_budgets.where(activity_id: activity.id).hours || 0
+    return 0 if activity.nil? || time_budgets.find_by(activity_id: activity.id).nil?
+
+    time_budgets.find_by(activity_id: activity.id).hours
   end
 
   def total_time_logged
@@ -45,6 +47,17 @@ class Job < ActiveRecord::Base
   def total_time_logged_for(activity)
     TimeEntry.where(job_id: id, activity_id: activity&.id)
              .sum(:hours)
+  end
+
+
+  def done_ratio
+    (total_time_logged / total_time_budget * 100).to_i
+  end
+
+  def done_ratio_for(activity)
+    return 0 if total_time_logged_for(activity).zero?
+
+    (total_time_logged_for(activity) / time_budget_for(activity) * 100).to_i
   end
 
   def to_s

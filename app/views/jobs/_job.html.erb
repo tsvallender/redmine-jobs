@@ -5,9 +5,10 @@
   <td><%= job.project_id %></td>
   <td><%= job.external_project_id %></td>
   <td>
-    <%= l_hours_short(job.total_time_logged) %> /
     <%= l_hours_short(job.total_time_budget) %>
-    <progress max="<%= job.total_time_budget %>" value="<%= job.total_time_logged %>"></progress>
+  </td>
+  <td>
+    <%= total_progress_bar(job) %>
   </td>
 </tr>
 

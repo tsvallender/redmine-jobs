@@ -27,8 +27,7 @@
         <div class="status attribute">
           <div class="label">Total:</div>
           <div class="value">
-            <%= l_hours_short(@job.total_time_logged) %> / <%= l_hours_short(@job.total_time_budget) %>
-            <progress max="<%= @job.total_time_budget %>" value="<%= @job.total_time_logged %>"></progress>
+            <%= total_progress_bar(@job) %>
           </div>
           <% @job.time_budgets.each do |budget| %>
             <%= render partial: "budget", locals: { budget: budget } %>
