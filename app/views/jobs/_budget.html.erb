@@ -1,4 +1,4 @@
-<div class="label"><%= budget.activity&.name || "Unassigned" %></div>
+<div class="label"><%= budget.category&.name || "Unassigned" %></div>
 <div class="value">
   <%= progress_bar_for(budget) %>
 </div>

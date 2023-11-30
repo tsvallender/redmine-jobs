@@ -7,9 +7,6 @@ module JobsHelper
   end
 
   def progress_bar_for(budget)
-    progress_bar(budget.job.done_ratio_for(budget.activity),
-                 legend: "#{budget.job.done_ratio_for(budget.activity)}%
-                          (#{l_hours_short(budget.job.total_time_logged_for(budget.activity))}/#{l_hours_short(budget.hours)})",
-    class: "progress")
+    l_hours_short(budget.hours)
   end
 end

@@ -52,7 +52,7 @@ class JobsController < ApplicationController
       :budget,
       :name,
       :description,
-      time_budgets_attributes: [:id, :activity_id, :hours, :job_id, :_destroy]
+      time_budgets_attributes: [:id, :category_id, :hours, :job_id, :_destroy]
     )
   end
 

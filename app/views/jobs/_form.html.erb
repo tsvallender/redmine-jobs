@@ -23,9 +23,9 @@
       <legend>Budget</legend>
       <%= f.fields_for :time_budgets do |ff| %>
         <p>
-        <%= ff.label :hours, ff.object.activity&.name || "Unassigned" %>
+        <%= ff.label :hours, ff.object.category&.name || "Unassigned" %>
         <%= ff.number_field :hours %>
-        <%= ff.hidden_field :activity_id %>
+        <%= ff.hidden_field :category_id %>
         <%= ff.hidden_field :job_id %>
         <%= ff.hidden_field :_destroy, value: false %>
       <% end %>

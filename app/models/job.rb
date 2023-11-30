@@ -15,16 +15,16 @@ class Job < ActiveRecord::Base
   scope :active, -> { where(starts_on: ..Date.today, ends_on: Date.today..) }
 
   def with_all_time_budgets
-    time_budgets.build(job_id: id, activity_id: nil) unless time_budgets.where(activity_id: nil).exists?
-    TimeEntryActivity.where.not(id: time_budgets.pluck(:activity_id)).each do |activity|
-      time_budgets.build(job_id: id, activity_id: activity.id)
+    time_budgets.build(job_id: id, category_id: nil) unless time_budgets.where(category_id: nil).exists?
+    TimeBudgetCategory.where.not(id: time_budgets.pluck(:category_id)).each do |category|
+      time_budgets.build(job_id: id, category_id: category.id)
     end
     self
   end
 
   def missing_time_budgets
     budgets = []
-    new_activities.collect { |activity| budgets << TimeBudget.new(job_id: id, activity_id: activity.id) }
+    new_activities.collect { |category| budgets << TimeBudget.new(job_id: id, category_id: category.id) }
   end
 
   def total_time_budget
@@ -33,10 +33,10 @@ class Job < ActiveRecord::Base
     time_budgets.sum(&:hours)
   end
 
-  def time_budget_for(activity)
-    return 0 if activity.nil? || time_budgets.find_by(activity_id: activity.id).nil?
+  def time_budget_for(category)
+    return 0 if category.nil? || time_budgets.find_by(category_id: category.id).nil?
 
-    time_budgets.find_by(activity_id: activity.id).hours
+    time_budgets.find_by(category_id: category.id).hours
   end
 
   def total_time_logged
@@ -44,20 +44,10 @@ class Job < ActiveRecord::Base
              .sum(:hours)
   end
 
-  def total_time_logged_for(activity)
-    TimeEntry.where(job_id: id, activity_id: activity&.id)
-             .sum(:hours)
-  end
-
-
   def done_ratio
+    return 0 if total_time_budget.zero?
+
     (total_time_logged / total_time_budget * 100).to_i
-  end
-
-  def done_ratio_for(activity)
-    return 0 if total_time_logged_for(activity).zero?
-
-    (total_time_logged_for(activity) / time_budget_for(activity) * 100).to_i
   end
 
   def to_s
