@@ -1,3 +1,5 @@
 en:
   field_jobs: Jobs
   field_job: Job
+
+  enumeration_time_budget_category: Time budget categories
