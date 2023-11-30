@@ -1,5 +1,6 @@
 <tr>
   <td><%= link_to job.name, project_job_path(job.project, job) %></td>
+  <td><%= job.category&.name || "Unassigned" %></td>
   <td><%= format_date(job.starts_on) %></td>
   <td><%= format_date(job.ends_on) %></td>
   <td><%= job.project_id %></td>

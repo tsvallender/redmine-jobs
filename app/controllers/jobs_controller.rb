@@ -52,6 +52,7 @@ class JobsController < ApplicationController
       :budget,
       :name,
       :description,
+      :category_id,
       time_budgets_attributes: [:id, :category_id, :hours, :job_id, :_destroy]
     )
   end

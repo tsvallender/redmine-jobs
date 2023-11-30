@@ -10,6 +10,10 @@
     <%= f.text_area :description %>
 
     <p>
+    <%= f.label :category %>
+    <%= f.collection_select :category_id, JobCategory.all, :id, :name %>
+
+    <p>
     <%= f.label :starts_on %>
     <%= f.date_field :starts_on %>
 

@@ -14,6 +14,8 @@
     <div class="splitcontent">
       <div class="splitcontentleft">
         <div class="status attribute">
+          <div class="label">Category:</div>
+          <div class="value"><%= @job.category&.name || "Unassigned" %></div>
           <div class="label">Starts on:</div>
           <div class="value"><%= format_date(@job.starts_on) %></div>
           <div class="label">Ends on:</div>
