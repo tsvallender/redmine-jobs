@@ -35,12 +35,6 @@ class Job < ActiveRecord::Base
     time_budgets.sum(&:hours)
   end
 
-  def time_budget_for(category)
-    return 0 if category.nil? || time_budgets.find_by(category_id: category.id).nil?
-
-    time_budgets.find_by(category_id: category.id).hours
-  end
-
   def total_time_logged
     TimeEntry.where(job_id: id)
              .sum(:hours)

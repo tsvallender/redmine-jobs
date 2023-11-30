@@ -10,4 +10,18 @@ class TimeBudget < ActiveRecord::Base
 
   belongs_to :job
   belongs_to :category, class_name: "TimeBudgetCategory"
+
+  def done_ratio
+    return 0 if hours.zero?
+
+    (total_time_logged / hours * 100).to_i
+  end
+
+  def total_time_logged
+    TimeEntry.joins(:user)
+             .where(
+               job_id: job_id,
+               users: { time_budget_category_id: category_id }
+             ).sum(:hours)
+  end
 end
