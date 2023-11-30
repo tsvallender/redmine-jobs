@@ -50,7 +50,6 @@ class JobsController < ApplicationController
       :ends_on,
       :project_id,
       :budget,
-      :external_project_id,
       :name,
       :description,
       time_budgets_attributes: [:id, :activity_id, :hours, :job_id, :_destroy]

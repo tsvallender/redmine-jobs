@@ -19,10 +19,6 @@
 
     <%= f.hidden_field :project_id, value: @job.project.id %>
 
-    <p>
-    <%= f.label :external_project_id %>
-    <%= f.number_field :external_project_id %>
-
     <fieldset>
       <legend>Budget</legend>
       <%= f.fields_for :time_budgets do |ff| %>
