@@ -1,6 +1,11 @@
 en:
+  activerecord:
+    attributes:
+      user:
+        time_budget_category_id: Log time as
   field_jobs: Jobs
   field_job: Job
 
   enumeration_time_budget_category: Time budget categories
   enumeration_job_category: Job categories
+

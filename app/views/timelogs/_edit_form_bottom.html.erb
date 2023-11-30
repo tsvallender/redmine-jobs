@@ -1,4 +1,3 @@
 <p>
 <%= form.label :job_id %>
 <%= form.collection_select :job_id, Job.project_or_parent(@project), :id, :name %>
-</p>

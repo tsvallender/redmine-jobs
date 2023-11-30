@@ -10,6 +10,7 @@ Redmine::Plugin.register :jobs do
   menu :project_menu, :jobs, { controller: 'jobs', action: 'index' }, caption: 'Jobs', after: :issues, param: :project_id
 
   TimeEntry.safe_attributes 'job_id'
+  User.safe_attributes 'time_budget_category_id'
 
   Rails.application.config.before_initialize do
     Rails.logger.info "Patch Jobs"

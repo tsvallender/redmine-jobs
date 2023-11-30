@@ -1,0 +1,3 @@
+<p>
+<%= form.label :time_budget_category_id %>
+<%= form.collection_select :time_budget_category_id, TimeBudgetCategory.all, :id, :name, include_blank: true %>
