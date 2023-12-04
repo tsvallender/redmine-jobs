@@ -26,10 +26,12 @@ class JobsController < ApplicationController
   end
 
   def create
-    if @job = Job.create(job_params)
+    @job = Job.new(job_params)
+    if @job.save
       redirect_to project_job_path(@job.project, @job)
     else
-      render :edit
+      @project = @job.project
+      render :new
     end
   end
 

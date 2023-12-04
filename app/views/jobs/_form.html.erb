@@ -24,7 +24,7 @@
     <%= f.hidden_field :project_id, value: @job.project.id %>
 
     <fieldset>
-      <legend>Budget</legend>
+      <legend>Budget (hours)</legend>
       <%= f.fields_for :time_budgets do |ff| %>
         <p>
         <%= ff.label :hours, ff.object.category&.name || "Unassigned" %>

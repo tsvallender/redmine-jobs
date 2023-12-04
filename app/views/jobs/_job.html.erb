@@ -3,10 +3,6 @@
   <td><%= job.category&.name || "Unassigned" %></td>
   <td><%= format_date(job.starts_on) %></td>
   <td><%= format_date(job.ends_on) %></td>
-  <td><%= job.project_id %></td>
-  <td>
-    <%= l_hours_short(job.total_time_budget) %>
-  </td>
   <td>
     <%= total_progress_bar(job) %>
   </td>
