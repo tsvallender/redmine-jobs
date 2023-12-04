@@ -6,7 +6,6 @@ Redmine::Plugin.register :jobs do
   url 'http://tsvallender.co.uk'
   author_url 'http://tsvallender.co.uk'
 
-  permission :jobs, { jobs: [:index, :show, :new, :create, :edit, :update, :destroy] }, public: false
   menu :project_menu, :jobs, { controller: 'jobs', action: 'index' }, caption: 'Jobs', after: :issues, param: :project_id
 
   TimeEntry.safe_attributes 'job_id'
@@ -17,5 +16,9 @@ Redmine::Plugin.register :jobs do
     TimeEntryQuery.send(:include, TimeEntryQueryPatch)
     TimeEntry.send(:include, TimeEntryPatch)
     Project.send(:include, ProjectPatch)
+  end
+
+  project_module :jobs do
+    permission :jobs, { jobs: [:index, :show, :new, :create, :edit, :update, :destroy] }, public: false
   end
 end
