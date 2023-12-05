@@ -26,7 +26,7 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.new(job_params)
+    @job = Job.new(remove_empty_time_budgets(job_params))
     if @job.save
       redirect_to project_job_path(@job.project, @job)
     else

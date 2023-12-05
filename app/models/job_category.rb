@@ -5,6 +5,10 @@ class JobCategory < Enumeration
 
   OptionName = :enumeration_job_category
 
+  scope :support, -> { where(name: 'Support').first }
+  scope :retainer, -> { where(name: 'Retainer').first }
+  scope :sprints, -> { where(name: 'Sprints').first }
+
   def option_name
     OptionName
   end

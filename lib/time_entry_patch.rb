@@ -7,5 +7,13 @@ module TimeEntryPatch
 
   included do
     belongs_to :job
+
+    before_save :set_job, unless: :job
+
+    def set_job
+      return if job.present?
+
+      self.job = Job.default_for(self)
+    end
   end
 end

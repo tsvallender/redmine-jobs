@@ -50,4 +50,23 @@ class Job < ActiveRecord::Base
     ActionView::Base.send(:include, Rails.application.routes.url_helpers)
     ActionController::Base.helpers.link_to name, ActionController::Base.helpers.project_job_path(project, self)
   end
+
+  def self.default_for(time_entry)
+    projects = [time_entry.project, time_entry.project.parent]
+    jobs = Job.where(project: projects).active
+    support = jobs.where(category: JobCategory.support).first
+    retainer = jobs.where(category: JobCategory.retainer).first
+    sprints = jobs.where(category: JobCategory.sprints).first
+    priority_list = [sprints, retainer, support].compact
+
+    return jobs.first if priority_list.empty?
+
+    return support if time_entry.activity.name == "Support"
+
+    return priority_list.first if time_entry.issue.blank?
+
+    return support if time_entry.issue.tracker.name == "Support"
+
+    priority_list.first
+  end
 end
