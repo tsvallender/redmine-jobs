@@ -51,6 +51,10 @@ class Job < ActiveRecord::Base
     ActionController::Base.helpers.link_to name, ActionController::Base.helpers.project_job_path(project, self)
   end
 
+  def self.fields_for_order_statement
+    "jobs.name"
+  end
+
   def self.default_for(time_entry)
     projects = [time_entry.project, time_entry.project.parent]
     jobs = Job.where(project: projects).active
