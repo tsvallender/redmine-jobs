@@ -1,1 +1,16 @@
+/* These are a copy of the default CSS for issues */
 div.job {background:#ffffdd; padding:6px; margin-bottom:6px; border: 1px solid #d7d7d7; border-radius:3px;}
+div.job div.subject div div { padding-left: 16px; word-break: break-word; }
+div.job div.subject p {margin: 0; margin-bottom: 0.1em; font-size: 90%; color: #999;}
+div.job div.subject>div>p { margin-top: 0.5em; }
+div.job div.subject h3 {margin: 0; margin-bottom: 0.1em;}
+div.job p.author {margin-top:0.5em;}
+div.job span.private, div.journal span.private {font-size: 60%;}
+div.job .next-prev-links {color:#999;}
+div.job .attributes {margin-top: 2em;}
+div.job .attributes .attribute {padding-left:180px; clear:left; min-height: 1.8em;}
+div.job .attributes .attribute .label {width: 170px; margin-left:-180px; font-weight:bold; float:left;  overflow: clip visible; text-overflow: ellipsis;}
+div.job .attribute .value {overflow:auto; text-overflow: ellipsis;}
+div.job .attribute.string_cf .value .wiki p {margin-top: 0; margin-bottom: 0;}
+div.job .attribute.text_cf .value .wiki p:first-of-type {margin-top: 0;}
+div.job.overdue .due-date .value { color: #c22; }

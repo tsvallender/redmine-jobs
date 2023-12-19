@@ -1,3 +1,7 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag "jobs", plugin: "jobs" %>
+<% end %>
+
 <% html_title @job.name %>
 <div class="contextual">
   <%= link_to 'Edit', edit_project_job_path(@project, @job), class: "icon icon-edit edit-job" %>
@@ -7,7 +11,7 @@
   <% end %>
 </div>
 <h2>Job #<%= @job.id %></h2>
-<div class="issue">
+<div class="job">
   <div class="subject"><h3><%= @job.name %></h3></div>
   <p><%= @job.description %></p>
   <div class="attributes">
