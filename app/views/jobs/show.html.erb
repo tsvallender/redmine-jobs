@@ -3,6 +3,7 @@
 <% end %>
 
 <% html_title @job.name %>
+<%= error_messages_for @job %>
 <div class="contextual">
   <%= link_to 'Edit', edit_project_job_path(@project, @job), class: "icon icon-edit edit-job" %>
   <%= actions_dropdown do %>
