@@ -1,0 +1,4 @@
+<p>
+  <label for="time_entry_job">Job</label>
+  <%= collection_select :time_entry, :job_id, Job.all, :id, :name, include_blank: true %>
+</p>
