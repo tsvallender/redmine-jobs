@@ -16,6 +16,7 @@ Redmine::Plugin.register :jobs do
     TimeEntryQuery.send(:include, TimeEntryQueryPatch)
     TimeEntry.send(:include, TimeEntryPatch)
     Project.send(:include, ProjectPatch)
+    Redmine::Helpers::TimeReport.send(:include, TimeReportHelperPatch)
   end
 
   project_module :jobs do
