@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
   has_many :time_budgets, dependent: :destroy
   accepts_nested_attributes_for :time_budgets, allow_destroy: true
 
-  scope :project_or_parent, ->(project) { where(project_id: [project.id, project.parent&.id]) }
+  scope :project_or_parent, ->(project) { where(project_id: [project&.id, project&.parent&.id]) }
   scope :active, -> { where(starts_on: ..Date.today, ends_on: Date.today..) }
 
   def with_all_time_budgets

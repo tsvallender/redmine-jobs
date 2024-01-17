@@ -1,3 +1,8 @@
 <p>
 <%= form.label :job_id %>
-<%= form.collection_select :job_id, Job.active.project_or_parent(@project), :id, :name, include_blank: true %>
+<% if @project.nil? %>
+  <%= form.collection_select :job_id, Job.active, :id, :name, include_blank: true %>
+<% else %>
+  <%= form.collection_select :job_id, Job.active.project_or_parent(@project), :id, :name, include_blank: true %>
+<% end %>
+</p>
