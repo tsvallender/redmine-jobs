@@ -2,12 +2,8 @@
   <%= error_messages_for @job %>
   <div class="box tabular">
     <p>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-
-    <p>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+    <label>Name <span class="required">*</span></label>
+    <%= f.text_field :name, required: true %>
 
     <p>
     <%= f.label :category %>
@@ -20,6 +16,11 @@
     <p>
     <%= f.label :ends_on %>
     <%= f.date_field :ends_on %>
+
+    <p>
+    <%= f.label :description %>
+    <%= f.text_area :description, required: true, cols: 60, rows: 15, class: "wiki-edit",
+                    data: { auto_complete: true }, id: "job_description" %>
 
     <%= f.hidden_field :project_id, value: @job.project.id %>
 
@@ -34,6 +35,7 @@
         <%= ff.hidden_field :_destroy, value: false %>
       <% end %>
     </fieldset>
+<%= wikitoolbar_for 'job_description' %>
 
   </div>
   <%= f.submit %>

@@ -15,7 +15,7 @@
 <h2>Job #<%= @job.id %></h2>
 <div class="job">
   <div class="subject"><h3><%= @job.name %></h3></div>
-  <p><%= @job.description %></p>
+  <p><%= textilizable(@job, :description) %></p>
   <div class="attributes">
     <div class="splitcontent">
       <div class="splitcontentleft">

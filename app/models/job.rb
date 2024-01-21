@@ -1,6 +1,7 @@
-include ActionView::Helpers::UrlHelper
-
 class Job < ActiveRecord::Base
+  include ActionView::Helpers::UrlHelper
+  include Redmine::SafeAttributes
+
   validates :starts_on,
             :ends_on,
             :name,
@@ -15,6 +16,8 @@ class Job < ActiveRecord::Base
 
   scope :project_or_parent, ->(project) { where(project_id: [project&.id, project&.parent&.id]) }
   scope :active, -> { where(starts_on: ..Date.today, ends_on: Date.today..) }
+
+  safe_attributes 'name', 'description'
 
   def with_all_time_budgets
     time_budgets.build(job_id: id, category_id: nil) unless time_budgets.where(category_id: nil).exists?
