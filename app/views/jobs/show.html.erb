@@ -5,6 +5,7 @@
 <% html_title @job.name %>
 <%= error_messages_for @job %>
 <div class="contextual">
+  <%= link_to 'Time logs', project_time_entries_path(@project, job_id: @job.id), class: "icon icon-time" %>
   <%= link_to 'Edit', edit_project_job_path(@project, @job), class: "icon icon-edit edit-job" %>
   <%= actions_dropdown do %>
     <%= copy_object_url_link(project_job_url(@project, @job, only_path: false)) %>
