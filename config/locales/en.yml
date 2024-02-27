@@ -9,3 +9,8 @@ en:
   enumeration_time_budget_category: Time budget categories
   enumeration_job_category: Job categories
 
+  History: History
+  Notes: Notes
+
+  field_starts_on: Starts on
+  field_ends_on: Ends on

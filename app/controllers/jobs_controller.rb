@@ -7,6 +7,7 @@ class JobsController < ApplicationController
   end
 
   def show
+    @journals = @job.journals
   end
 
   def new
@@ -18,6 +19,7 @@ class JobsController < ApplicationController
   end
 
   def update
+    @job.init_journal(User.current)
     if @job.update(remove_empty_time_budgets(job_params))
       redirect_to project_job_path(@job.project, @job)
     else
@@ -55,6 +57,7 @@ class JobsController < ApplicationController
       :name,
       :description,
       :category_id,
+      :notes,
       time_budgets_attributes: [:id, :category_id, :hours, :job_id, :_destroy]
     )
   end

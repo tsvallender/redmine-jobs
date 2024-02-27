@@ -12,10 +12,10 @@ Redmine::Plugin.register :jobs do
   User.safe_attributes 'time_budget_category_id'
 
   Rails.application.config.before_initialize do
-    Rails.logger.info "Patch Jobs"
     TimeEntryQuery.send(:include, TimeEntryQueryPatch)
     TimeEntry.send(:include, TimeEntryPatch)
     Project.send(:include, ProjectPatch)
+    JournalsController.send(:include, JournalsControllerPatch)
     Redmine::Helpers::TimeReport.send(:include, TimeReportHelperPatch)
   end
 

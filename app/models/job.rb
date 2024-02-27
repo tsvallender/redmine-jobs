@@ -12,12 +12,20 @@ class Job < ActiveRecord::Base
 
   has_many :time_entries, dependent: :restrict_with_error
   has_many :time_budgets, dependent: :destroy
+  has_many :journals, as: :journalized, dependent: :destroy, inverse_of: :journalized
+  delegate :notes, :notes=, to: :current_journal, allow_nil: true
   accepts_nested_attributes_for :time_budgets, allow_destroy: true
+
+  acts_as_customizable
+  acts_as_watchable
+  acts_as_mentionable attributes: [ "description" ]
 
   scope :project_or_parent, ->(project) { where(project_id: [project&.id, project&.parent&.id]) }
   scope :active, -> { where(starts_on: ..Date.today, ends_on: Date.today..) }
 
   safe_attributes 'name', 'description'
+
+  after_save :create_journal
 
   def with_all_time_budgets
     time_budgets.build(job_id: id, category_id: nil) unless time_budgets.where(category_id: nil).exists?
@@ -52,6 +60,44 @@ class Job < ActiveRecord::Base
   def to_s
     ActionView::Base.send(:include, Rails.application.routes.url_helpers)
     ActionController::Base.helpers.link_to name, ActionController::Base.helpers.project_job_path(project, self)
+  end
+
+  def init_journal(user, notes = "")
+    @current_journal = Journal.new(journalized: self, user: user, notes: notes)
+  end
+
+  def current_journal
+    @current_journal
+  end
+
+  def create_journal
+    current_journal.save if current_journal
+  end
+
+  def journalized_attribute_names
+    Job.column_names - %w(id created_at updated_at)
+  end
+
+  def notified_users
+    []
+  end
+
+  def notes_addable?(user = User.current)
+    #user_tracker_permission?(user, :add_job_notes)
+    true
+  end
+
+  # tracker and subject are used to make Job quack like an issue so the diff view
+  # built into Redmine will work
+  def tracker
+    OpenStruct.new(
+      name: name,
+      to_s: "Job",
+    )
+  end
+
+  def subject
+    name
   end
 
   def self.fields_for_order_statement

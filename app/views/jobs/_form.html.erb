@@ -20,7 +20,7 @@
     <p>
     <%= f.label :description %>
     <%= f.text_area :description, required: true, cols: 60, rows: 15, class: "wiki-edit",
-                    data: { auto_complete: true }, id: "job_description" %>
+      data: { auto_complete: true }, id: "job_description" %>
 
     <%= f.hidden_field :project_id, value: @job.project.id %>
 
@@ -35,8 +35,17 @@
         <%= ff.hidden_field :_destroy, value: false %>
       <% end %>
     </fieldset>
-<%= wikitoolbar_for 'job_description' %>
+    <%= wikitoolbar_for 'job_description' %>
 
+
+    <% unless @job.new_record? %>
+      <fieldset id="add_notes">
+        <legend>Notes</legend>
+        <%= f.text_area :notes, cols: 60, rows: 15, class: "wiki-edit",
+          data: { auto_complete: true }, id: "job_notes" %>
+        <%= wikitoolbar_for 'job_notes' %>
+      </fieldset>
+    <% end %>
   </div>
   <%= f.submit %>
 <% end %>
