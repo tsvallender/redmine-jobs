@@ -59,7 +59,7 @@ class Job < ActiveRecord::Base
 
   def to_s
     ActionView::Base.send(:include, Rails.application.routes.url_helpers)
-    ActionController::Base.helpers.link_to name, ActionController::Base.helpers.project_job_path(project, self)
+    ActionController::Base.helpers.link_to name, ActionController::Base.helpers.job_path(self)
   end
 
   def init_journal(user, notes = "")
@@ -85,6 +85,17 @@ class Job < ActiveRecord::Base
   def notes_addable?(user = User.current)
     #user_tracker_permission?(user, :add_job_notes)
     true
+  end
+
+  # Used for journal actions (edit, quote)
+  def visible_journals_with_index
+    result = journals.
+      preload(:details).
+      preload(:user => :email_address).
+      reorder(:created_on, :id).to_a
+
+    result.each_with_index {|j, i| j.indice = i + 1}
+    result
   end
 
   # tracker and subject are used to make Job quack like an issue so the diff view

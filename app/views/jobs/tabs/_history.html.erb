@@ -9,7 +9,7 @@
     <div id="note-<%= indice %>" class="note">
       <div class="contextual">
         <span class="journal-actions">
-          <!-- TODO -->
+          <%= render_journal_actions(job, journal, :reply_links => reply_links) %>
         </span>
         <a href="#note-<%= journal.indice %>" class="journal-link"><%= indice %></a>
       </div>

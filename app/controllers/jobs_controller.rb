@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
-  before_action :set_project, only: [:index, :new, :show, :edit]
   before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:index, :new, :show, :edit]
 
   def index
     @jobs = Job.project_or_parent(@project)
@@ -21,7 +21,7 @@ class JobsController < ApplicationController
   def update
     @job.init_journal(User.current)
     if @job.update(remove_empty_time_budgets(job_params))
-      redirect_to project_job_path(@job.project, @job)
+      redirect_to job_path(@job)
     else
       render :edit
     end
@@ -30,7 +30,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(remove_empty_time_budgets(job_params))
     if @job.save
-      redirect_to project_job_path(@job.project, @job)
+      redirect_to job_path(@job)
     else
       @project = @job.project
       render :new
@@ -63,7 +63,7 @@ class JobsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:project_id])
+    @project = @job.project
   end
 
   def set_job

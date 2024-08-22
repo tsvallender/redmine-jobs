@@ -1,5 +1,5 @@
 <% html_title "Edit #{@job.name}" %>
 <h2>Edit <%= @job.name %></h2>
 
-<%= render partial: "form", locals: { form_target: project_job_path(@job.project, @job) } %>
+<%= render partial: "form", locals: { form_target: job_path(@job) } %>
 

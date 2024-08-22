@@ -46,7 +46,7 @@ module JobsHelper
     "history"
   end
 
-  # Below methods copied directly from issues_helper with few adjustments
+  # Below methods copied directly from jobs_helper with few adjustments
 
 
   # Returns the textual representation of a journal details
@@ -109,26 +109,26 @@ module JobsHelper
       end
     when 'relation'
       if detail.value && !detail.old_value
-        rel_issue = Issue.visible.find_by_id(detail.value)
+        rel_job = Issue.visible.find_by_id(detail.value)
         value =
-          if rel_issue.nil?
-            "#{l(:label_issue)} ##{detail.value}"
+          if rel_job.nil?
+            "#{l(:label_job)} ##{detail.value}"
           else
-            (no_html ? rel_issue : link_to_issue(rel_issue, :only_path => options[:only_path]))
+            (no_html ? rel_job : link_to_job(rel_job, :only_path => options[:only_path]))
           end
       elsif detail.old_value && !detail.value
-        rel_issue = Issue.visible.find_by_id(detail.old_value)
+        rel_job = Issue.visible.find_by_id(detail.old_value)
         old_value =
-          if rel_issue.nil?
-            "#{l(:label_issue)} ##{detail.old_value}"
+          if rel_job.nil?
+            "#{l(:label_job)} ##{detail.old_value}"
           else
-            (no_html ? rel_issue : link_to_issue(rel_issue, :only_path => options[:only_path]))
+            (no_html ? rel_job : link_to_job(rel_job, :only_path => options[:only_path]))
           end
       end
       relation_type = IssueRelation::TYPES[detail.prop_key]
       label = l(relation_type[:name]) if relation_type
     end
-    call_hook(:helper_issues_show_detail_after_setting,
+    call_hook(:helper_jobs_show_detail_after_setting,
               {:detail => detail, :label => label, :value => value, :old_value => old_value})
 
     label ||= detail.prop_key
@@ -205,7 +205,51 @@ module JobsHelper
     @detail_value_name_by_reflection[[field, id]]
   end
 
-  def render_notes(issue, journal, options={})
+  def render_notes(job, journal, options={})
     content_tag('div', textilizable(journal, :notes), :id => "journal-#{journal.id}-notes", :class => "wiki")
+  end
+
+  def render_journal_actions(job, journal, options={})
+    links = []
+    dropbown_links = []
+    indice = 1
+
+    dropbown_links << copy_object_url_link(job_url(job, anchor: "note-#{indice}", only_path: false))
+    if journal.attachments.size > 1
+      dropbown_links << link_to(l(:label_download_all_attachments),
+                                container_attachments_download_path(journal),
+                                :title => l(:label_download_all_attachments),
+                                :class => 'icon icon-download'
+                               )
+    end
+
+    if journal.notes.present?
+      if options[:reply_links]
+        links << link_to(l(:button_quote),
+                         quoted_job_path(job, :journal_id => journal, :journal_indice => indice),
+                         :remote => true,
+                         :method => 'post',
+                         :title => l(:button_quote),
+                         :class => 'icon-only icon-comment'
+                        )
+      end
+      if journal.editable_by?(User.current)
+        links << link_to(l(:button_edit),
+                         edit_journal_path(journal),
+                         :remote => true,
+                         :method => 'get',
+                         :title => l(:button_edit),
+                         :class => 'icon-only icon-edit'
+                        )
+        dropbown_links << link_to(l(:button_delete),
+                                  journal_path(journal, :journal => {:notes => ""}),
+                                  :remote => true,
+                                  :method => 'put',
+                                  :data => {:confirm => l(:text_are_you_sure)},
+                                  :class => 'icon icon-del'
+                                 )
+      end
+    end
+    safe_join(links, ' ') + actions_dropdown {safe_join(dropbown_links, ' ')}
   end
 end
